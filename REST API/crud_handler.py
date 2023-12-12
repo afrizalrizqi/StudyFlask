@@ -23,13 +23,13 @@ def create_user(user):
 
 #Fungsi untuk menampilkan semua employee
 def get_all_user():
-    users = {}
+    users = []  # Fix: Change to a list
     try:
         conn = connect_db()
         conn.row_factory = sql.Row
         cur = conn.cursor()
         cur.execute("SELECT * FROM employees")
-        
+
         rows = cur.fetchall()
         for i in rows:
             user = {}
@@ -38,9 +38,12 @@ def get_all_user():
             user["phone"] = i["phone"]
             user["city"] = i["city"]
             users.append(user)
-    except:
+    except Exception as e:
+        print(f"Error: {e}")
         users = []
-        
+    finally:
+        conn.close()
+
     return users
 
 #Fungsi untuk menampilkan salah satu employee berdasarkan id nya
@@ -58,9 +61,11 @@ def get_user_by_id(user_id):
         user["phone"] = row["phone"]
         user["city"] = row["city"]
         
-    except:
-        user = []
-    
+    except Exception as e:
+        print(f"Error: {e}")
+        users = []
+    finally:
+        conn.close()
     return user
 
 #Fungsi untuk melakukan edit pada data employee

@@ -12,13 +12,14 @@ CORS(app, resources={
 #Route untuk melihat keseluruhan employee
 @app.route('/user', methods=['GET'])
 def api_get_all_users():
+    dot=get_all_user()
     result = jsonify(get_all_user())
     return result
 
 #Route untuk melihat salah satu employee
 @app.route('/user/<user_id>', methods=['GET'])
 def api_get_user_by_id(user_id):
-    return jasonify(get_user_by_id(user_id))
+    return jsonify(get_user_by_id(user_id))
 
 #Route untuk menambahkan data employee baru
 @app.route('/user/add', methods=['POST'])
